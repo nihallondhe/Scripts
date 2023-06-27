@@ -1,5 +1,16 @@
 # Installing terraform  this  script is for ubuntu server
 
+# First check terraform is installed or not
+
+terraform init
+
+if [ $? -eq 0 ]
+
+then 
+   echo "terraform is installed "
+
+else
+
 sudo apt-get update && sudo apt-get install -y gnupg software-properties-common
 wget -O- https://apt.releases.hashicorp.com/gpg | \
 gpg --dearmor | \
@@ -18,3 +29,5 @@ sudo apt update
 
 
 sudo apt-get install terraform
+
+fi

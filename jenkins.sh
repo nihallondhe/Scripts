@@ -1,13 +1,25 @@
-#sudo su -
+#!/bin/bash
 
-apt install wget -y
+jenkins
+#kubectl
 
-wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
-rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
-apt install fontconfig java-11-openjdk -y
-apt install jenkins -y
-systemctl enable jenkins
+if [ $? -eq 1 ]
+then
+  echo "jenkins is already installed"
+else
 
-systemctl start jenkins
+ curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key | sudo tee \
+  /usr/share/keyrings/jenkins-keyring.asc > /dev/null
+ echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
+  https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+  /etc/apt/sources.list.d/jenkins.list > /dev/null
+ sudo apt-get update
+ sudo apt-get install jenkins -y 
+ sudo apt update -y
+ sudo apt install openjdk-11-jre -y
+ java -version
+#openjdk version "11.0.12" 2021-07-20
+#OpenJDK Runtime Environment (build 11.0.12+7-post-Debian-2)
+#OpenJDK 64-Bit Server VM (build 11.0.12+7-post-Debian-2, mixed mode, sharing)
 
-#systemctl status jenkins
+fi
